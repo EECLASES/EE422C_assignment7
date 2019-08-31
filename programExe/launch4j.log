@@ -1,0 +1,64 @@
+
+
+Version:	3.12
+CmdLine:	C:\Users\magr9\Documents\EE 422C\ClassworkAndProjects\Project77GUI\programExe\finishedProgram.exe --l4j-debug
+WOW64:		yes
+Working dir:	C:\Users\magr9\Documents\EE 422C\ClassworkAndProjects\Project77GUI\programExe\.
+Java min ver:	1.004.000
+Java max ver:	
+64-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8
+Check launcher:	C:\Program Files\Java\jre1.8.0_181\bin\javaw.exe (OK)
+Match:		1.008.000
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8.0_181
+Check launcher:	C:\Program Files\Java\jre1.8.0_181\bin\javaw.exe (OK)
+Match:		1.008.000_181
+64-bit search:	SOFTWARE\JavaSoft\Java Development Kit...
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.8
+Ignore:		1.008.000
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.8.0_181
+Ignore:		1.008.000_181
+64-bit search:	SOFTWARE\JavaSoft\JRE...
+Check:		SOFTWARE\JavaSoft\JRE\10.0.2
+Check launcher:	C:\Program Files\Java\jre-10.0.2\bin\javaw.exe (OK)
+Match:		1.010.000_002
+64-bit search:	SOFTWARE\JavaSoft\JDK...
+Check:		SOFTWARE\JavaSoft\JDK\10.0.2
+Ignore:		1.010.000_002
+Runtime used:	1.010.000_002 (64-bit)
+Launcher:	C:\Program Files\Java\jre-10.0.2\bin\javaw.exe
+Launcher args:	-jar "C:\Users\magr9\Documents\EE 422C\ClassworkAndProjects\Project77GUI\programExe\finishedProgram.exe"
+Args length:	104/32768 chars
+Exit code:	0
+
+
+Version:	3.12
+CmdLine:	C:\Users\magr9\Documents\EE 422C\ClassworkAndProjects\Project77GUI\programExe\finishedProgram.exe --l4j-debug
+WOW64:		yes
+Working dir:	C:\Users\magr9\Documents\EE 422C\ClassworkAndProjects\Project77GUI\programExe\.
+Java min ver:	1.004.000
+Java max ver:	
+64-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8
+Check launcher:	C:\Program Files\Java\jre1.8.0_181\bin\javaw.exe (OK)
+Match:		1.008.000
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8.0_181
+Check launcher:	C:\Program Files\Java\jre1.8.0_181\bin\javaw.exe (OK)
+Match:		1.008.000_181
+64-bit search:	SOFTWARE\JavaSoft\Java Development Kit...
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.8
+Ignore:		1.008.000
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.8.0_181
+Ignore:		1.008.000_181
+64-bit search:	SOFTWARE\JavaSoft\JRE...
+Check:		SOFTWARE\JavaSoft\JRE\10.0.2
+Check launcher:	C:\Program Files\Java\jre-10.0.2\bin\javaw.exe (OK)
+Match:		1.010.000_002
+64-bit search:	SOFTWARE\JavaSoft\JDK...
+Check:		SOFTWARE\JavaSoft\JDK\10.0.2
+Ignore:		1.010.000_002
+Runtime used:	1.010.000_002 (64-bit)
+Launcher:	C:\Program Files\Java\jre-10.0.2\bin\javaw.exe
+Launcher args:	-jar "C:\Users\magr9\Documents\EE 422C\ClassworkAndProjects\Project77GUI\programExe\finishedProgram.exe"
+Args length:	104/32768 chars
+Exit code:	0
