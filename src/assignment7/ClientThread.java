@@ -18,7 +18,7 @@ public class ClientThread {
 	/*
 	 * IO connections and information
 	 */
-	private boolean readytoSend = false;
+	private boolean controllerReady = false;
 	private BufferedReader reader;
 	private PrintWriter writer;
 	private Socket sock;
@@ -26,8 +26,6 @@ public class ClientThread {
 	private String state = new String();
 	private String stateInfo = new String();
 	private boolean openDashBool = false;
-	private boolean newUser= false;
-	private boolean dashReady= false;
 	public String pendingMessage = new String();
 	private String chatNum = new String();
 	private String time = new String();
@@ -80,6 +78,7 @@ public class ClientThread {
 				try {
 					while ((message = reader.readLine()) != null) {
 						
+							
 							System.out.println("processing " + message + " ");
 							codes = message.split(" ", 2);
 							clientName = codes[0];
@@ -99,7 +98,6 @@ public class ClientThread {
 					}
 					System.out.println("The thread has ended");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
@@ -118,91 +116,168 @@ public class ClientThread {
 
 	public void parseLoginInfo(String data) throws IOException {
 		String serverCodes[] = new String[2];
-		serverCodes = data.split(" ", 3);
+		serverCodes = data.split(" ", 2);
 		
 		state = serverCodes[0];
 		
+		//Start of switch statements...
 		
-	
-		if(dashReady && state.equals("dash")) {
-			openDashBool = true;
-			dashReady = false;
-			sendWriter("");
-			
-		}
-//		else if(dashReady && !state.equals("dash")) {
-//			sendWriter("");
-//			
-//			
-//		}
-		else if (state.equals("login")) {
-			serverMessage = serverCodes[1];
-		}
-		else if(state.equals("Friends")) {
-			int number = Integer.parseInt(serverCodes[1]);
-			if(number>0) {
-				String[] friendsString = new String[number];
-				friendsString = serverCodes[2].split("++", number);
-				friends.clear();
-				for(String friend: friendsString) {
-					friends.add(friend);
+		switch(state)
+		
+		{
+			case "dash":
+				openDashBool = true;
+				
+			break;
+				
+			case "login":
+				serverMessage = serverCodes[1];
+			break;
+				
+			case "Friends":
+				int number = Integer.parseInt(serverCodes[1]);
+				if(number > 0) {
+					String[] friendsString = new String[number];
+					friendsString = serverCodes[2].split("++", number);
+					friends.clear();
+					for(String friend: friendsString) {
+						friends.add(friend);
+					}
 				}
-			}
-		}
-		else if(state.equals("TimeActive")) {
-			this.setTimeSeconds(Integer.parseInt(serverCodes[1]));
-			this.setTime(serverCodes[1]);
+			break;
+				
+			case "TimeActive":
+				this.setTimeSeconds(Integer.parseInt(serverCodes[1]));
+				this.setTime(serverCodes[1]);
 			
-		}
-		else if (state.equals("Chats")) {
-			
-			chatNum = serverCodes[1];
-			if(Integer.parseInt(chatNum)>0) {
-				allChats = new String[Integer.parseInt(chatNum)];
-				allChats = serverCodes[2].split(" ", Integer.parseInt(chatNum));
-				listOfChats.clear();
-				for (String chat: allChats) {
-					this.listOfChats.add(chat);
+			break;
+				
+			case "Chats":
+				String parseItems[] = new String[2];
+				
+				//This is to parse the Item amoung
+				parseItems = serverCodes[1].split(" ", 2);
+				int itemLength = Integer.parseInt(parseItems[0]);
+				String wordLength = parseItems[1];
+				int wordLengthNum = Integer.parseInt(wordLength);
+				for(int i = 0; i < itemLength; i++) {
+					String parseWords[] = new String[wordLengthNum + 1];
+					parseWords = wordLength.split(" ", wordLengthNum);
+					
+					
+					
+//					for(int j = 0; j < wordLength; j++) {
+//						
+//					}
+					//parseItems = 
 				}
-//				DashChatsController DC = (DashChatsController) controllers.get("chat");
-//		    	DC.dashChats();
-			}
+				chatNum = serverCodes[1];
+				if(Integer.parseInt(chatNum)>0) {
+					allChats = new String[Integer.parseInt(chatNum)];
+					allChats = serverCodes[2].split(" ", Integer.parseInt(chatNum));
+					listOfChats.clear();
+					for (String chat: allChats) {
+						this.listOfChats.add(chat);
+					}
 			
-		}
-		else if(state.equals("Notifications")) {
-			String notificationNum = serverCodes[1];
-			if(Integer.parseInt(notificationNum) > 0) {
-				String[] allNotifications = new String[Integer.parseInt(notificationNum)];
-				allNotifications = serverCodes[2].split(" \\ ", Integer.parseInt(notificationNum));
-				listOfNotifications.clear();
+				}
+				
+			break;
+			
+			case "Notifications":
+				String notificationNum = serverCodes[1];
+				if(Integer.parseInt(notificationNum) > 0) {
+					String[] allNotifications = new String[Integer.parseInt(notificationNum)];
+					allNotifications = serverCodes[2].split(" \\ ", Integer.parseInt(notificationNum));
+					listOfNotifications.clear();
 				for (String notification: allNotifications) {
 					this.listOfNotifications.add(notification);
 				}
-			}
+				}
+			break;
 			
+			case "FriendAdded":
+				
+			break;
+			
+			default:
+				System.out.println("No match for " + state);
+				break;
+		
+		
+		
 		}
-		else if (state.equals("FriendAdded")) {
-			DashController a = (DashController) controllers.get("dash");
-			a.dash();
-		}
-		else if(listOfChats.contains(state)) {
-			String notification =  state + "-> " +serverCodes[2];
-//			this.messages.add(notification);
-//			this.listOfNotifications.add(notification);
-//			DashChatsController DC = (DashChatsController) controllers.get("chat");
-//	    	DC.dashChats();		
-		}
-		readytoSend = true;
+		controllerReady = true;
 		System.out.println("processed");
+	
+//		if(state.equals("dash")) {
+//			openDashBool = true;
+//			
+//		}
+//		else if (state.equals("login")) {
+//			serverMessage = serverCodes[1];
+//		}
+//		else if(state.equals("Friends")) {
+//			int number = Integer.parseInt(serverCodes[1]);
+//			if(number > 0) {
+//				String[] friendsString = new String[number];
+//				friendsString = serverCodes[2].split("++", number);
+//				friends.clear();
+//				for(String friend: friendsString) {
+//					friends.add(friend);
+//				}
+//			}
+//		}
+//		else if(state.equals("TimeActive")) {
+//			this.setTimeSeconds(Integer.parseInt(serverCodes[1]));
+//			this.setTime(serverCodes[1]);
+//			
+//		}
+//		else if (state.equals("Chats")) {
+//			
+//			chatNum = serverCodes[1];
+//			if(Integer.parseInt(chatNum)>0) {
+//				allChats = new String[Integer.parseInt(chatNum)];
+//				allChats = serverCodes[2].split(" ", Integer.parseInt(chatNum));
+//				listOfChats.clear();
+//				for (String chat: allChats) {
+//					this.listOfChats.add(chat);
+//				}
+////				
+//			}
+//			
+//		}
+//		else if(state.equals("Notifications")) {
+//			String notificationNum = serverCodes[1];
+//			if(Integer.parseInt(notificationNum) > 0) {
+//				String[] allNotifications = new String[Integer.parseInt(notificationNum)];
+//				allNotifications = serverCodes[2].split(" \\ ", Integer.parseInt(notificationNum));
+//				listOfNotifications.clear();
+//				for (String notification: allNotifications) {
+//					this.listOfNotifications.add(notification);
+//				}
+//			}
+//			
+//		}
+//		else if (state.equals("FriendAdded")) {
+//			DashController a = (DashController) controllers.get("dash");
+//			a.dash();
+//		}
+//		else if(listOfChats.contains(state)) {
+//			String notification =  state + "-> " +serverCodes[2];
+////			this.messages.add(notification);
+////			this.listOfNotifications.add(notification);
+////			DashChatsController DC = (DashChatsController) controllers.get("chat");
+////	    	DC.dashChats();		
+//		}
+//		controllerReady = true;
+//		System.out.println("processed");
 		
 	}
-	 public boolean isReadytoSend() {
-		return readytoSend;
+	 public boolean isControllerReady() {
+		return controllerReady;
 	}
 
-	public void setReadytoSend(boolean readytoSend) {
-		this.readytoSend = readytoSend;
-	}
 
 	public String getState() {
 		return state;
@@ -216,24 +291,9 @@ public class ClientThread {
 		this.openDashBool = openDashBool;
 	}
 
-	public boolean isNewUser() {
-		return newUser;
-	}
-
-	public void setNewUser(boolean newUser) {
-		this.newUser = newUser;
-	}
-
-	public boolean isDashReady() {
-		return dashReady;
-	}
-
-	public void setDashReady(boolean dashReady) {
-		this.dashReady = dashReady;
-	}
 
 	public void sendWriter(String str) {
-		
+			controllerReady = false;
 			writer.println(clientName + " " + state + " " + str);
 			writer.flush();
 		

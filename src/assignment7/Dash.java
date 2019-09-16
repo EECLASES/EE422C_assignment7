@@ -69,8 +69,8 @@ public class Dash extends Application {
 			chatScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
 			//Sets the BroadCast scene
-			FXMLLoader broadcastLoader = new FXMLLoader(getClass().getResource("Dashboard-Chats.fxml"));
-			DashChatsController dashBroadcastController = new DashChatsController();
+			FXMLLoader broadcastLoader = new FXMLLoader(getClass().getResource("Dashboard-Broadcasts.fxml"));
+			DashBroadcastController dashBroadcastController = new DashBroadcastController();
 			broadcastLoader.setController(dashBroadcastController);
 			AnchorPane broadcastRoot = (AnchorPane) broadcastLoader.load();
 			Scene broadcastScene = new Scene(broadcastRoot);

@@ -108,44 +108,80 @@ public class DashSettingsController implements Initializable{
 	    void putIntoSearchbar(ActionEvent event) {
 
 	    }
-
 	    @FXML
-	    void switchToBroadcasts(MouseEvent event) {
 
+	    void switchToBroadcasts(MouseEvent event) {
+	    	DashBroadcastController DC = (DashBroadcastController) controllers.get("broadcast");
+
+	    	stage.setScene(broadcastScene);
 	    }
 
 	    @FXML
 	    void switchToChats(MouseEvent event) throws IOException {
-	    	dashChats();
+	    	
+	    	DashChatsController DC = (DashChatsController) controllers.get("chat");
+	    	DC.dashChats();
+	    	stage.setScene(chatScene);
 	    }
 
 	    @FXML
-	    void switchToDash(MouseEvent event) {
+	    void switchToDash(MouseEvent event) throws IOException {
+	    	DashController DC = (DashController) controllers.get("dash");
 
+	    	stage.setScene(dashScene);
 	    }
 
 	    @FXML
-	    void switchToFriends(MouseEvent event) {
-
+	    void switchToFriends(MouseEvent event) throws IOException {
+	    	DashFriendsController DC = (DashFriendsController) controllers.get("friend");
+	    	DC.dashFriends();
+	    	stage.setScene(friendScene);
 	    }
 
 	    @FXML
-	    void switchToNotifications(MouseEvent event) {
-
+	    void switchToNotifications(MouseEvent event) throws IOException {
+	    	DashNotificationsController DC = (DashNotificationsController) controllers.get("notification");
+	    	DC.dashNotifications();
+	    	stage.setScene(notificationScene);
 	    }
 
 	    @FXML
-	    void switchToSettings(MouseEvent event) {
-
+	    void switchToSettings(MouseEvent event) throws IOException {
+	    	DashSettingsController DC = (DashSettingsController) controllers.get("setting");
+	    	dashSettings();
+	    	stage.setScene(settingScene);
 	    }
+	    private void dashSettings() {
+			// TODO Auto-generated method stub
+			
+		}
+
 	    @FXML
 	    void exitProgram(MouseEvent event) {
-	    	System.exit(1);
+	    	myThread.setState("quit");
+	    	myThread.sendWriter("");
+	    	System.exit(2);
+	    	stage.close();
 	    }
 
 	    @FXML
 	    void lowerScreen(MouseEvent event) {
-
+	    	stage.toBack();
+	    }
+	    private double initialX= 0;
+		private double initialY= 0;
+	    @FXML
+	    void getInitialStage(MouseEvent event) {
+		  
+		  	initialX = event.getSceneX();
+          	initialY = event.getSceneY();
+	    }
+	  
+	    @FXML
+	    void stageDrag(MouseEvent event) {
+		  stage.setX(event.getScreenX() - initialX);
+          stage.setY(event.getScreenY() - initialY);
+          
 	    }
 		
 	    @FXML

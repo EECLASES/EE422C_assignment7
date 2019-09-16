@@ -44,7 +44,7 @@ public class LoginController implements Initializable{
 	}
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -79,30 +79,29 @@ public class LoginController implements Initializable{
     @FXML
     void handleLoginButtonAction(ActionEvent event) throws InterruptedException {
     	
-    	//Checks if it can open the dash
-    	if(myThread.isOpenDashBool()) {
-    		mediaPlayerDashLogin.play();
-    		openDash();
-    	}
-    	//otherwise process a name change
-    	myThread.setDashReady(true);
+    	
+    	//process a name change
     	if(username.getText().trim().length() > 0 && passwordField.getText().trim().length() > 0 )
     		{
     		myThread.setState("login");
     		myThread.sendWriter(username.getText() + " " + passwordField.getText());
     	}
-    	else if(myThread.getState().equals("login")) {
-    		
-    	}
     	else {
     		text.setText("Please input valid Strings for input");
     	}
     	
-    	while(!myThread.isReadytoSend()) {
-        	
+    	while(!myThread.isControllerReady()) {
+    		System.out.println("Controller waiting...");
         	}
-    	text.setText(myThread.getServerMessage());
-        myThread.setReadytoSend(false);
+    	
+    	//Checks if it can open the dash
+    	if(myThread.isOpenDashBool()) {
+    		mediaPlayerDashLogin.play();
+    		openDash();
+    	}
+    	else {
+    		text.setText(myThread.getServerMessage());
+    	}
     	
     	
     	
@@ -111,19 +110,27 @@ public class LoginController implements Initializable{
     void handleNewUserLogin(ActionEvent event) throws InterruptedException {
     	if(username.getText().trim().length() > 0 && passwordField.getText().trim().length() > 0 ) {
 	    	mediaPlayerNotification.play();
-	    	myThread.setDashReady(true);
 	    	myThread.setState("newUser");
-	    	//text.setText("New user created, press login to enter DashBoard");
 	    	
 	    	myThread.sendWriter(username.getText().trim() + " " + passwordField.getText().trim());
-	    	while(!myThread.isReadytoSend()) {
-	        	
+	    	
+	    	while(!myThread.isControllerReady()) {
+	        	System.out.println("Controller waiting...");
 	    	}
+	    	
 	    	text.setText(myThread.getServerMessage());
-	    	myThread.setReadytoSend(false);
-    	}else {
+	    	
+	    	
+	    
+    	}
+    	else {
     		text.setText("Please input valid Strings for input");
 
+    	}
+    	
+    	if(myThread.isOpenDashBool()) {
+    		mediaPlayerDashLogin.play();
+    		openDash();
     	}
     }
     @FXML

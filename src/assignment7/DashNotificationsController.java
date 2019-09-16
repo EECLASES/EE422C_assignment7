@@ -88,28 +88,12 @@ public class DashNotificationsController implements Initializable{
 		private Scene friendScene;
 		private Scene settingScene;
 		private Scene broadcastScene;
-		
-		private double initialX= 0;
-		private double initialY= 0;
 		private static ClientThread myThread  = Dash.getMyThread();
 		
 		
 		
 
 		
-		  @FXML
-		    void getInitialStage(MouseEvent event) {
-			  
-			  	initialX = event.getSceneX();
-	          	initialY = event.getSceneY();
-		    }
-		  
-		  @FXML
-		    void stageDrag(MouseEvent event) {
-			  stage.setX(event.getScreenX() - initialX);
-	          stage.setY(event.getScreenY() - initialY);
-	          
-		    }
 	    @FXML
 	    void buttonAddFriend(ActionEvent event) {
 
@@ -121,14 +105,15 @@ public class DashNotificationsController implements Initializable{
 	    }
 	    @FXML
 	    void switchToBroadcasts(MouseEvent event) {
-	    	DashBroadcastController DC = (DashBroadcastController) controllers.get("chats");
-//	    	DC.dashBroadcast();
-	    	stage.setScene(chatScene);
+	    	DashBroadcastController DC = (DashBroadcastController) controllers.get("broadcast");
+
+	    	stage.setScene(broadcastScene);
 	    }
+
 	    @FXML
 	    void switchToChats(MouseEvent event) throws IOException {
 	    	
-	    	DashChatsController DC = (DashChatsController) controllers.get("chats");
+	    	DashChatsController DC = (DashChatsController) controllers.get("chat");
 	    	DC.dashChats();
 	    	stage.setScene(chatScene);
 	    }
@@ -137,13 +122,12 @@ public class DashNotificationsController implements Initializable{
 	    void switchToDash(MouseEvent event) throws IOException {
 	    	DashController DC = (DashController) controllers.get("dash");
 
-	    	DC.dash();
 	    	stage.setScene(dashScene);
 	    }
 
 	    @FXML
 	    void switchToFriends(MouseEvent event) throws IOException {
-	    	DashSettingsController DC = (DashSettingsController) controllers.get("setting");
+	    	DashFriendsController DC = (DashFriendsController) controllers.get("friend");
 	    	DC.dashFriends();
 	    	stage.setScene(friendScene);
 	    }
@@ -151,24 +135,43 @@ public class DashNotificationsController implements Initializable{
 	    @FXML
 	    void switchToNotifications(MouseEvent event) throws IOException {
 	    	DashNotificationsController DC = (DashNotificationsController) controllers.get("notification");
-	    	DC.dashNotifications();
+	    	dashNotifications();
 	    	stage.setScene(notificationScene);
 	    }
 
 	    @FXML
 	    void switchToSettings(MouseEvent event) throws IOException {
-	    	DashFriendsController DC = (DashFriendsController) controllers.get("friend");
+	    	DashSettingsController DC = (DashSettingsController) controllers.get("setting");
+
 	    	DC.dashFriends();
 	    	stage.setScene(settingScene);
 	    }
 	    @FXML
 	    void exitProgram(MouseEvent event) {
+	    	myThread.setState("quit");
+	    	myThread.sendWriter("");
+	    	System.exit(2);
 	    	stage.close();
 	    }
 
 	    @FXML
 	    void lowerScreen(MouseEvent event) {
 	    	stage.toBack();
+	    }
+	    private double initialX= 0;
+		private double initialY= 0;
+	    @FXML
+	    void getInitialStage(MouseEvent event) {
+		  
+		  	initialX = event.getSceneX();
+          	initialY = event.getSceneY();
+	    }
+	  
+	    @FXML
+	    void stageDrag(MouseEvent event) {
+		  stage.setX(event.getScreenX() - initialX);
+          stage.setY(event.getScreenY() - initialY);
+          
 	    }
 		
 		

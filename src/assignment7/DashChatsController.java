@@ -34,56 +34,56 @@ public class DashChatsController implements Initializable{
 
 	    
 		
-		@FXML
-	    private FontAwesomeIconView minimizeIcon;
+    @FXML
+    private TextField searchBar;
 
-	    @FXML
-	    private FontAwesomeIconView exitIcon;
-	    
-		@FXML
-	    private TextField searchBar;
+    @FXML
+    private HBox panelDash1;
 
-	    @FXML
-	    private HBox panelDash;
+    @FXML
+    private HBox panelNotifications1;
 
-	    @FXML
-	    private HBox panelNotifications;
+    @FXML
+    private HBox panelFriends1;
 
-	    @FXML
-	    private HBox panelFriends;
+    @FXML
+    private HBox panelBroadcast1;
 
-	    @FXML
-	    private HBox panelBroadcast;
+    @FXML
+    private HBox panelChats1;
 
-	    @FXML
-	    private HBox panelChats;
+    @FXML
+    private HBox panelSettings1;
 
-	    @FXML
-	    private HBox panelSettings;
+    @FXML
+    private Label friend11;
 
+    @FXML
+    private Label friend21;
 
-	    @FXML
-	    private Button addFriend;
+    @FXML
+    private Label friend31;
 
-	    @FXML
-	    private FontAwesomeIconView dashNotificationBell;
+    @FXML
+    private Button addFriend;
 
-	    @FXML
-	    private FontAwesomeIconView dashSettingsIcon;
+    
 
-	  //static FXML Variables
-	    @FXML
-	    private  Label dashNotIcon;
-	    @FXML
-	    private  Label friend1;
-	    @FXML
-	    private  Label friend2;
-	    @FXML
-	    private  Label friend3;
-	    @FXML
-	    private  TextField userInput;
-	    @FXML
-	    private Button sendChatButton;
+    @FXML
+    private TextField userInput;
+
+    @FXML
+    private Button sendChatButton;
+
+    
+
+    
+
+    @FXML
+    private FontAwesomeIconView minimizeIcon;
+
+    @FXML
+    private FontAwesomeIconView exitIcon;
 	    
 	    //stage variables
 	    private Stage stage;
@@ -138,7 +138,7 @@ public class DashChatsController implements Initializable{
           	initialY = event.getSceneY();
 	    }
 	  
-	  @FXML
+	    @FXML
 	    void stageDrag(MouseEvent event) {
 		  stage.setX(event.getScreenX() - initialX);
           stage.setY(event.getScreenY() - initialY);
@@ -155,15 +155,16 @@ public class DashChatsController implements Initializable{
 	    }
 	    @FXML
 	    void switchToBroadcasts(MouseEvent event) {
-	    	DashBroadcastController DC = (DashBroadcastController) controllers.get("chats");
-//	    	DC.dashBroadcast();
+	    	DashBroadcastController DC = (DashBroadcastController) controllers.get("broadcast");
+
 	    	stage.setScene(broadcastScene);
 	    }
+
 	    @FXML
 	    void switchToChats(MouseEvent event) throws IOException {
 	    	
-	    	DashChatsController DC = (DashChatsController) controllers.get("chats");
-	    	DC.dashChats();
+	    	DashChatsController DC = (DashChatsController) controllers.get("chat");
+	    	dashChats();
 	    	stage.setScene(chatScene);
 	    }
 
@@ -171,13 +172,12 @@ public class DashChatsController implements Initializable{
 	    void switchToDash(MouseEvent event) throws IOException {
 	    	DashController DC = (DashController) controllers.get("dash");
 
-	    	dashChats();
 	    	stage.setScene(dashScene);
 	    }
 
 	    @FXML
 	    void switchToFriends(MouseEvent event) throws IOException {
-	    	DashSettingsController DC = (DashSettingsController) controllers.get("setting");
+	    	DashFriendsController DC = (DashFriendsController) controllers.get("friend");
 	    	DC.dashFriends();
 	    	stage.setScene(friendScene);
 	    }
@@ -191,7 +191,8 @@ public class DashChatsController implements Initializable{
 
 	    @FXML
 	    void switchToSettings(MouseEvent event) throws IOException {
-	    	DashFriendsController DC = (DashFriendsController) controllers.get("friend");
+	    	DashSettingsController DC = (DashSettingsController) controllers.get("setting");
+	    	
 	    	DC.dashFriends();
 	    	stage.setScene(settingScene);
 	    }

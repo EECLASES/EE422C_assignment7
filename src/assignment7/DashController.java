@@ -154,8 +154,7 @@ public class DashController implements Initializable{
     @FXML
     void switchToBroadcasts(MouseEvent event) {
     	DashBroadcastController DC = (DashBroadcastController) controllers.get("broadcast");
-//    	DC.dashBroadcast();
-    	stage.setScene(chatScene);
+    	stage.setScene(broadcastScene);
     }
 
     @FXML
@@ -176,7 +175,7 @@ public class DashController implements Initializable{
 
     @FXML
     void switchToFriends(MouseEvent event) throws IOException {
-    	DashSettingsController DC = (DashSettingsController) controllers.get("setting");
+    	DashFriendsController DC = (DashFriendsController) controllers.get("friend");
     	DC.dashFriends();
     	stage.setScene(friendScene);
     }
@@ -190,7 +189,7 @@ public class DashController implements Initializable{
 
     @FXML
     void switchToSettings(MouseEvent event) throws IOException {
-    	DashFriendsController DC = (DashFriendsController) controllers.get("friend");
+    	DashSettingsController DC = (DashSettingsController) controllers.get("setting");
     	DC.dashFriends();
     	stage.setScene(settingScene);
     }
@@ -232,6 +231,9 @@ public class DashController implements Initializable{
 	 public void dash() throws IOException {
 		 	myThread.getDashInfo();	
 		 	
+		 	while(!myThread.isControllerReady()) {
+				System.out.println("Controller Waiting...");
+			}
 		 	
 			timeActive1.setText(Integer.toString(myThread.getMessages().size()));
 			timeActive2.setText(Integer.toString(myThread.getFriends().size()));
@@ -242,6 +244,7 @@ public class DashController implements Initializable{
 				friend2.setText(myThread.getFriends().get(2));
 				friend3.setText(myThread.getFriends().get(3));
 			}
+			
 			
 			mostPopularLabel.setText( Integer.toString(myThread.getMessages().size()) + " messages out of all messages" );
 			totalPrivateLabel.setStyle("-fx-accent:  #f5b942;");
