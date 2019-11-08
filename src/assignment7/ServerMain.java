@@ -88,9 +88,9 @@ public class ServerMain  {
 			String messages = new String();
 			
 			for(int i = 0; i < person.getMessages().size(); i++) {
-				messages = messages.concat("\\" + person.getMessages().get(i) );
+				messages = messages.concat("\\ " + person.getMessages().get(i) );
 			}
-			person.println(person.getPersonInfo() + Integer.toString(person.getFriends().size())  + " " + messages);
+			person.println(person.getPersonInfo() + Integer.toString(person.getMessages().size())  + " " + messages);
 			person.flush();
 			break;
 		case "getNotifications":
@@ -100,7 +100,7 @@ public class ServerMain  {
 				notificationString = notificationString.concat(" \\ " + person.getNotifications().get(i)) ;
 			}
 			
-			person.println(person.getPersonInfo() + person.getNotifications().size()  +  notificationString);
+			person.println(person.getPersonInfo() + person.getNotifications().size()  + " " + notificationString );
 			person.flush();
 			break;
 		case "getChats":
@@ -128,6 +128,7 @@ public class ServerMain  {
 				person.println("Sorry, this group chat name already exists. Try again with different person");
 				person.flush();
 			}
+			
 			
 	
 			break;

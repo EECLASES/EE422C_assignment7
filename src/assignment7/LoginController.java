@@ -91,7 +91,7 @@ public class LoginController implements Initializable{
     	}
     	
     	while(!myThread.isControllerReady()) {
-    		System.out.println("Controller waiting...");
+    		System.out.println("Controller waiting......");
         	}
     	
     	//Checks if it can open the dash
@@ -112,25 +112,26 @@ public class LoginController implements Initializable{
 	    	mediaPlayerNotification.play();
 	    	myThread.setState("newUser");
 	    	
+
 	    	myThread.sendWriter(username.getText().trim() + " " + passwordField.getText().trim());
 	    	
-	    	while(!myThread.isControllerReady()) {
-	        	System.out.println("Controller waiting...");
-	    	}
-	    	
-	    	text.setText(myThread.getServerMessage());
-	    	
-	    	
-	    
     	}
     	else {
     		text.setText("Please input valid Strings for input");
 
     	}
     	
+    	while(!myThread.isControllerReady()) {
+        	System.out.println("Controller waiting.");
+    	}
+    	text.setText(myThread.getServerMessage());
+
     	if(myThread.isOpenDashBool()) {
     		mediaPlayerDashLogin.play();
     		openDash();
+    	}
+    	else {
+    		text.setText(myThread.getServerMessage());
     	}
     }
     @FXML

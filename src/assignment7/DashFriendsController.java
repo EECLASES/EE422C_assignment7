@@ -218,7 +218,7 @@ public class DashFriendsController implements Initializable{
 		 public void dash() throws IOException {
 			 
 			 timeActive.setText(myThread.getTime());
-				timeActive1.setText(Integer.toString(myThread.getMessages().size()));
+				timeActive1.setText(Integer.toString(myThread.getListOfMessages().size()));
 				timeActive2.setText(Integer.toString(myThread.getFriends().size()));
 				this.dashNotIcon.setText(Integer.toString(myThread.getListOfNotifications().size()));
 				if(myThread.getFriends().size()>2) {

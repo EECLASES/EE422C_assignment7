@@ -235,7 +235,7 @@ public class DashController implements Initializable{
 				System.out.println("Controller Waiting...");
 			}
 		 	
-			timeActive1.setText(Integer.toString(myThread.getMessages().size()));
+			timeActive1.setText(Integer.toString(myThread.getListOfMessages().size()));
 			timeActive2.setText(Integer.toString(myThread.getFriends().size()));
 			dashNotIcon.setText(Integer.toString(myThread.getListOfNotifications().size()));
 			timeActive.setText(myThread.getTime() + " total seconds since creation" );
@@ -246,7 +246,7 @@ public class DashController implements Initializable{
 			}
 			
 			
-			mostPopularLabel.setText( Integer.toString(myThread.getMessages().size()) + " messages out of all messages" );
+			mostPopularLabel.setText( Integer.toString(myThread.getListOfMessages().size()) + " messages out of all messages" );
 			totalPrivateLabel.setStyle("-fx-accent:  #f5b942;");
 			totalPrivateLabel.setText("<value> out of " + Integer.toString(myThread.getListOfChats().size()) + " chats");
 			totalFriendsLabel.setText("<value> out of <valueOfAllUsers> users" );

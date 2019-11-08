@@ -19,6 +19,10 @@ public class ClientThread {
 	 * IO connections and information
 	 */
 	private boolean controllerReady = false;
+	private boolean dashControllerReady = false;
+	
+	
+
 	private BufferedReader reader;
 	private PrintWriter writer;
 	private Socket sock;
@@ -27,7 +31,6 @@ public class ClientThread {
 	private String stateInfo = new String();
 	private boolean openDashBool = false;
 	public String pendingMessage = new String();
-	private String chatNum = new String();
 	private String time = new String();
 	private int timeSeconds = 0;
 	private String serverMessage = new String();
@@ -44,14 +47,18 @@ public class ClientThread {
 		this.timeSeconds = timeSeconds;
 	}
 
-	public String[] allChats;
 	
 	private ArrayList<String> listOfNotifications = new ArrayList<String>();
 	private ArrayList<String> listOfChats = new ArrayList<String>();
-	
+	private ArrayList<String> listOfMessages = new ArrayList<String>();
+
 	
 
 	
+	public ArrayList<String> getListOfMessages() {
+		return listOfMessages;
+	}
+
 	private HashMap<String, Object> controllers;
 	 public void controllers(HashMap<String, Object> controllers2) {
 		 this.controllers = controllers2;
@@ -135,7 +142,7 @@ public class ClientThread {
 			break;
 				
 			case "Friends":
-				int number = Integer.parseInt(serverCodes[1]);
+				int number = Integer.parseInt(serverCodes[1].trim());
 				if(number > 0) {
 					String[] friendsString = new String[number];
 					friendsString = serverCodes[2].split("++", number);
@@ -155,48 +162,53 @@ public class ClientThread {
 			case "Chats":
 				String parseItems[] = new String[2];
 				
-				//This is to parse the Item amoung
+				this.listOfChats.clear();
+
+				//This is to parse the Item amount
 				parseItems = serverCodes[1].split(" ", 2);
 				int itemLength = Integer.parseInt(parseItems[0]);
-				String wordLength = parseItems[1];
-				int wordLengthNum = Integer.parseInt(wordLength);
-				for(int i = 0; i < itemLength; i++) {
-					String parseWords[] = new String[wordLengthNum + 1];
-					parseWords = wordLength.split(" ", wordLengthNum);
-					
-					
-					
-//					for(int j = 0; j < wordLength; j++) {
-//						
-//					}
-					//parseItems = 
+				for(String groupName: parseItems[1].split(" ")) {
+					this.listOfChats.add(groupName);
 				}
-				chatNum = serverCodes[1];
-				if(Integer.parseInt(chatNum)>0) {
-					allChats = new String[Integer.parseInt(chatNum)];
-					allChats = serverCodes[2].split(" ", Integer.parseInt(chatNum));
-					listOfChats.clear();
-					for (String chat: allChats) {
-						this.listOfChats.add(chat);
-					}
-			
-				}
+				
 				
 			break;
 			
 			case "Notifications":
-				String notificationNum = serverCodes[1];
-				if(Integer.parseInt(notificationNum) > 0) {
-					String[] allNotifications = new String[Integer.parseInt(notificationNum)];
-					allNotifications = serverCodes[2].split(" \\ ", Integer.parseInt(notificationNum));
-					listOfNotifications.clear();
+				String parseItems1[] = new String[2];
+
+				//This is to parse the Item amount
+				parseItems1 = serverCodes[1].split(" ", 2);
+				
+				int notificationNum = Integer.parseInt(parseItems1[0]);
+				
+				
+				String[] allNotifications = new String[notificationNum];
+				allNotifications = parseItems1[1].split(" \\ ");
+
+				listOfNotifications.clear();
 				for (String notification: allNotifications) {
 					this.listOfNotifications.add(notification);
 				}
-				}
+				
 			break;
 			
-			case "FriendAdded":
+			case "Messages":
+				String parseItems11[] = new String[2];
+
+				//This is to parse the Item amount
+				parseItems11 = serverCodes[1].split(" ", 2);
+				
+				int MessagesNum = Integer.parseInt(parseItems11[0]);
+				
+				
+				String[] messages = new String[MessagesNum];
+				messages = parseItems11[1].split(" \\ ");
+
+				this.listOfMessages.clear();
+				for (String message: messages) {
+					this.listOfMessages.add(message);
+				}
 				
 			break;
 			
@@ -210,68 +222,7 @@ public class ClientThread {
 		controllerReady = true;
 		System.out.println("processed");
 	
-//		if(state.equals("dash")) {
-//			openDashBool = true;
-//			
-//		}
-//		else if (state.equals("login")) {
-//			serverMessage = serverCodes[1];
-//		}
-//		else if(state.equals("Friends")) {
-//			int number = Integer.parseInt(serverCodes[1]);
-//			if(number > 0) {
-//				String[] friendsString = new String[number];
-//				friendsString = serverCodes[2].split("++", number);
-//				friends.clear();
-//				for(String friend: friendsString) {
-//					friends.add(friend);
-//				}
-//			}
-//		}
-//		else if(state.equals("TimeActive")) {
-//			this.setTimeSeconds(Integer.parseInt(serverCodes[1]));
-//			this.setTime(serverCodes[1]);
-//			
-//		}
-//		else if (state.equals("Chats")) {
-//			
-//			chatNum = serverCodes[1];
-//			if(Integer.parseInt(chatNum)>0) {
-//				allChats = new String[Integer.parseInt(chatNum)];
-//				allChats = serverCodes[2].split(" ", Integer.parseInt(chatNum));
-//				listOfChats.clear();
-//				for (String chat: allChats) {
-//					this.listOfChats.add(chat);
-//				}
-////				
-//			}
-//			
-//		}
-//		else if(state.equals("Notifications")) {
-//			String notificationNum = serverCodes[1];
-//			if(Integer.parseInt(notificationNum) > 0) {
-//				String[] allNotifications = new String[Integer.parseInt(notificationNum)];
-//				allNotifications = serverCodes[2].split(" \\ ", Integer.parseInt(notificationNum));
-//				listOfNotifications.clear();
-//				for (String notification: allNotifications) {
-//					this.listOfNotifications.add(notification);
-//				}
-//			}
-//			
-//		}
-//		else if (state.equals("FriendAdded")) {
-//			DashController a = (DashController) controllers.get("dash");
-//			a.dash();
-//		}
-//		else if(listOfChats.contains(state)) {
-//			String notification =  state + "-> " +serverCodes[2];
-////			this.messages.add(notification);
-////			this.listOfNotifications.add(notification);
-////			DashChatsController DC = (DashChatsController) controllers.get("chat");
-////	    	DC.dashChats();		
-//		}
-//		controllerReady = true;
-//		System.out.println("processed");
+
 		
 	}
 	 public boolean isControllerReady() {
@@ -293,7 +244,7 @@ public class ClientThread {
 
 
 	public void sendWriter(String str) {
-			controllerReady = false;
+    	    controllerReady = false;
 			writer.println(clientName + " " + state + " " + str);
 			writer.flush();
 		
@@ -303,6 +254,7 @@ public class ClientThread {
 	}
 
 	public void getDashInfo() {
+		dashControllerReady = false;
 		this.state = "getTimeActive";
 		sendWriter("");
 		this.state = "getFriends";
@@ -314,10 +266,11 @@ public class ClientThread {
 		this.state = "getChats";
 		sendWriter("");
 
-		
+		dashControllerReady = true;
 		
 	}
 	public void getChatInfo() {
+		dashControllerReady = false;
 		this.state = "getChats";
 		sendWriter("");
 		this.state = "getMessages";
@@ -325,14 +278,20 @@ public class ClientThread {
 		this.state = "getNotifications";
 		sendWriter("");
 		
-	
+		dashControllerReady = true;
 	}
 	
 	public void getFriendsInfo() {
+		dashControllerReady = false;
 		this.state = "getFriends";
 		sendWriter("");
+		dashControllerReady = true;
 		
 	}
+	public boolean isDashControllerReady() {
+		return dashControllerReady;
+	}
+
 	public void getNotificationsInfo() {
 		this.state = "getNotifications";
 		sendWriter("");
@@ -354,14 +313,7 @@ public class ClientThread {
 		this.listOfNotifications = listOfNotifications;
 	}
 
-	private ArrayList<String> messages = new ArrayList<String>();
-	public ArrayList<String> getMessages() {
-		return messages;
-	}
-
-	public void setMessages(ArrayList<String> messages) {
-		this.messages = messages;
-	}
+	
 
 	
 	public ArrayList<String> getListOfChats() {

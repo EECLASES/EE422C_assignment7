@@ -230,36 +230,41 @@ public class DashChatsController implements Initializable{
 	    
 	    
 	    
-		public void dashChats() {
+		 void dashChats() {
 			
 			myThread.getChatInfo();
 			
-			
+			while(!myThread.isDashControllerReady() || !myThread.isControllerReady()) {
+				System.out.println("waiting on Chats");
+			}
 
 			if(myThread.getListOfChats().size() > 0) {
+				
 				ChatList.getChildren().clear();
+				ChatList.setSpacing(10.0);
+
 			 for(String chat: myThread.getListOfChats()) {
 				 
-				HBox newMessage = new HBox();
-				Label newLabel = new Label();
-				newLabel.setText(chat);
-				newMessage.getChildren().add(newLabel);
-				newMessage.setMargin(newLabel, new Insets(0.0,0.0,0.0,20.0));
+				HBox newChat = new HBox();
+				Text newLabelChat = new Text(chat);
+				newChat.getChildren().add(newLabelChat);
+				newChat.setMargin(newLabelChat, new Insets(10.0,5.0,5.0,20.0));
 				
-				ChatList.getChildren().add(newMessage);
+				ChatList.getChildren().add(newChat);
 				 
 			 }
+			 
 			}
 			
-			if(myThread.getMessages().size()> 0) {
+			if(myThread.getListOfMessages().size() > 0) {
 				ChatList1.getChildren().clear();
-				for(String message: myThread.getListOfNotifications()) {
+				ChatList1.setSpacing(10.0);
+				for(String message: myThread.getListOfMessages()) {
 					
 					HBox newMessage = new HBox();
-					Label newLabel = new Label();
-					newLabel.setText(message);
+					Text newLabel = new Text(message);
 					newMessage.getChildren().add(newLabel);
-					newMessage.setMargin(newLabel, new Insets(0.0,0.0,0.0,20.0));
+					newMessage.setMargin(newLabel, new Insets(10.0,5.0,5.0,20.0));
 					ChatList1.getChildren().add(newMessage);
 				 }
 			}
